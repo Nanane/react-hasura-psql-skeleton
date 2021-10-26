@@ -1,0 +1,36 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    expose:
+      - ${NGINX_PORT}
+    ports:
+      - ${NGINX_PORT}:3000
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/public:/usr/src/app/public
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  postgres:
+    image: postgres:14.0
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+  graphql-engine:
+    image: hasura/graphql-engine:v1.2.0-beta.1
+    ports:
+      - "${HASURA_PORT}:8080"
+    depends_on:
+      - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DATABASE}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" 
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: "startup, http-log, webhook-log, websocket-log, query-log"  
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET}"
