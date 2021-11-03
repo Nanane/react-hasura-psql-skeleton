@@ -1,20 +1,21 @@
 ### React Postgres Hasura Skeleton
 
 This is my personal skeleton for building apps as of 2021.
+It builds a fresh frontend app and a postgres database, on top of which I personally enjoy adding an hasura console
 
 ## Requirements
 * `git`
-* `docker`
-* `docker-compose`
+* `docker` + `docker-compose`
+* `nvm` + `node16`
+* an hasura cloud account
 
 ## Setup
 
 * fork the repository
-* run `./scripts/init-project.sh`
+* run `./scripts/init-env.sh`
 * you will be asked configuration options, everything is required
 * Once it's done, you can already start your project by running `docker-compose up -d`
-* You will be able to access your frontend app and hasura console through the ports you will have configured via `http://localhost:{port}`
-
+* You will be able to access your frontend app through the ports you will have configured via `http://localhost:{port}`
 
 # Reverse proxy
 

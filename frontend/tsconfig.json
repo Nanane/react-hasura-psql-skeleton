@@ -11,8 +11,7 @@
       "hooks/*": ["hooks/*"]
     },
     "lib": [
-      "dom",
-      "dom.iterable",
+f      "dom.iterable",
       "esnext"
     ],
     "allowJs": true,
